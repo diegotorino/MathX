@@ -92,25 +92,21 @@ class MainController extends Controller
         $exercises = session('exercises');
         $filename = 'exercises_' . env('APP_NAME') . '_' . date('YmdHis') . '.txt';
 
-        $content = '';
+        $content = 'Exercícios de Matemática (' . env('APP_NAME') . ')' . "\n\n";
         foreach($exercises as $exercise) {
-            $content .= $exercise['exercise_number'] . ' > ' . $exercise['exercise'] . '\n';
+            $content .= $exercise['exercise_number'] . ' > ' . $exercise['exercise'] . "\n";
         }
 
         //sollutions 
-        $content .= '\n';
-        $content .= 'Soluções\n' . str_repeat('-', 20) . '\n';
+        $content .= "\n";
+        $content .= "Soluções\n" . str_repeat('-', 20) . "\n";
         foreach ($exercises as $exercise) {
-            $content .= $exercise['exercise_number'] . ' > ' . $exercise['sollution'] . '\n';
+            $content .= $exercise['exercise_number'] . ' > ' . $exercise['sollution'] . "\n";
         }
 
         return response($content)
                 ->header('Content-Type', 'text/plain')
                 ->header('Content-Disposition', 'attachment; filename="' . $filename . '"');
-
-
-
-
     }
 
     private function generateExercise($index, $operations, $min, $max): array 
